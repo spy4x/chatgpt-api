@@ -8,11 +8,11 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-async function chat(prompt) {
+async function chat(prompt, setup) {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "Answer as a pirate" },
+      { role: "system", content: setup || "Answer as a pirate" },
       {
         role: "user",
         content: prompt,
@@ -26,7 +26,8 @@ async function chat(prompt) {
   return answer;
 }
 
+const setup = `Answer as a Batman`;
 const prompt = `Say hello to my YouTube subscribers, 
 it's 20-ish of them yet.`;
 
-console.log(await chat(prompt));
+console.log(await chat(prompt, setup));
